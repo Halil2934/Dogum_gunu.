@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Süslü Kutlama 🎂</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #fff5f8 0%, #fce4ec 100%);
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: crosshair;
+        }
+
+        /* Süslü Pasta */
+        .cake-container { position: relative; }
+
+        .cake {
+            position: relative;
+            width: 250px;
+            height: 120px;
+            background: linear-gradient(#ff80ab, #f06292);
+            border-radius: 20px 20px 5px 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Krema Damlaları */
+        .cream {
+            position: absolute;
+            top: -5px;
+            width: 100%;
+            height: 40px;
+            background: #ffffff;
+            border-radius: 20px 20px 20px 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .drop {
+            width: 30px;
+            height: 45px;
+            background: #ffffff;
+            border-radius: 0 0 50% 50%;
+        }
+
+        /* Mum ve Alev */
+        .candle {
+            width: 12px;
+            height: 60px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, #4fc3f7 5px, #4fc3f7 10px);
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .flame {
+            width: 20px;
+            height: 30px;
+            background: #ffeb3b;
+            box-shadow: 0 0 20px #ff9800;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -35px;
+            left: -4px;
+            animation: burn 0.3s infinite alternate;
+        }
+
+        @keyframes burn {
+            from { transform: scale(1) rotate(-2deg); }
+            to { transform: scale(1.1) rotate(2deg); }
+        }
+
+        /* Tıklama Efekti: Kalpli 20 */
+        .pop {
+            position: absolute;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: splash 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            z-index: 999;
+        }
+
+        .heart { font-size: 40px; filter: drop-shadow(0 0 5px rgba(0,0,0,0.1)); }
+        .number { 
+            font-size: 32px; 
+            font-weight: 900; 
+            color: #d81b60; 
+            text-shadow: 2px 2px 0px white;
+        }
+
+        @keyframes splash {
+            0% { transform: scale(0) translateY(0); opacity: 1; }
+            50% { transform: scale(1.2) translateY(-100px); opacity: 1; }
+            100% { transform: scale(1.5) translateY(-250px); opacity: 0; }
+        }
+
+        .hint {
+            position: fixed;
+            top: 20px;
+            font-size: 1.2rem;
+            color: #ad1457;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body onclick="spawnCelebration(event)">
+
+    <div class="hint">Ekrana Dokun, Sürprizi Gör! ✨</div>
+
+    <div class="cake-container">
+        <div class="candle"><div class="flame"></div></div>
+        <div class="cake">
+            <div class="cream">
+                <div class="drop"></div>
+                <div class="drop"></div>
+                <div class="drop" style="height: 55px;"></div>
+                <div class="drop"></div>
+                <div class="drop"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function spawnCelebration(e) {
+            const container = document.createElement('div');
+            container.className = 'pop';
+            container.style.left = (e.clientX - 25) + 'px';
+            container.style.top = (e.clientY - 25) + 'px';
+
+            // Rastgele bir kalp rengi seçelim
+            const hearts = ['❤️', '💖', '💝', '💗'];
+            const randomHeart = hearts[Math.floor(Math.random() * hearts.length)];
+
+            container.innerHTML = `
+                <span class="heart">${randomHeart}</span>
+                <span class="number">20</span>
+            `;
+
+            document.body.appendChild(container);
+
+            // 1.5 saniye sonra öğeyi sil
+            setTimeout(() => {
+                container.remove();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
